@@ -1,4 +1,8 @@
 /*OBJETO LITERAL */
+/*Los objetos literales se distinguen de los objetos de la POO porque no son instancias de un prototipo creado por el desarrollador.
+.
+Sin embargo los objetos literales son instancias del prototipo Object creado por defecto en JavaScript.*/
+
 const natalia = {
     name: "Natalia",
     age: 20,
@@ -14,6 +18,9 @@ const natalia = {
 
 
 /*PROTOTIPO */
+/*Un prototipo es una estructura de código a partir de la cual se crean objetos, ya que guarda los atributos y métodos que luego podrán ser heredados por sus instancias.
+.
+Podemos pensarlo como un “molde” de objetos.*/
 function Student(name,age,cursosAprobados){
     this.name=name;
     this.age=age;
