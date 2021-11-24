@@ -1,16 +1,62 @@
+function videoPlay(id){
+    const urlSecreta = "https://ultrasecretomasquelanasa.com/"+id;
+    console.log("Se esta reproduciendo en una url y se concatena en una url secreta: "+urlSecreta);
+}
+
+function videoStop(id){
+    const urlSecreta = "https://ultrasecretomasquelanasa.com/"+id;
+    console.log("Se esta pausando en una url y se concatena en una url secreta: "+urlSecreta);
+}
+
+export class PlatziClass{
+    constructor({
+        name,
+        videoID,
+    }){
+        this.name = name;
+        this.videoID = videoID;
+    }
+
+    reproducir(){
+        videoPlay(this.videoID);
+    }
+
+    pausar(){
+        videoStop(this.videoID);
+    }
+
+}
+
+
 class Course{
     constructor({
         name,
         classes=[],
     }){
-        this.name = name;
+        this._name = name;
         this.classes = classes;
+    }
+
+    get name(){
+        return this._name;
+    }
+
+    set name(nuevoNombrecito){
+        if(nuevoNombrecito === "Curso Malito de programacion basica"){
+            console.error("Web... no");
+        }else{
+            this._name= nuevoNombrecito;
+        }
     }
 };
 
 const cursoProgramacionBasica = new Course({
     name: "Curso Gratis de programación Basica",
 });
+
+
+//devuelve el nombre
+
 const cursoDefinitivoHTMLCSS = new Course({
     name: "Curso definitivo de HTML y CSS",
 });
