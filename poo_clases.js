@@ -1,3 +1,22 @@
+class Comment {
+    constructor({
+        content,
+        studentName,
+        studentRole = "estudiante",
+    }){
+        this.content = content;
+        this.studentName = studentName;
+        this.studentRole = studentRole;
+        this.likes = 0;
+    }
+
+    publicar(){
+        console.log(this.studentName + " (" + this.studentRole + ")");
+        console.log(this.likes + " likes");
+        console.log(this.content);
+    }
+}
+
 function videoPlay(id){
     const urlSecreta = "https://ultrasecretomasquelanasa.com/"+id;
     console.log("Se esta reproduciendo en una url y se concatena en una url secreta: "+urlSecreta);
@@ -8,7 +27,7 @@ function videoStop(id){
     console.log("Se esta pausando en una url y se concatena en una url secreta: "+urlSecreta);
 }
 
-export class PlatziClass{
+class PlatziClass{
     constructor({
         name,
         videoID,
@@ -32,9 +51,13 @@ class Course{
     constructor({
         name,
         classes=[],
+        isFree = false,
+        lang = "spanish",
     }){
         this._name = name;
         this.classes = classes;
+        this.isFree = isFree;
+        this.lang = lang;
     }
 
     get name(){
@@ -52,6 +75,7 @@ class Course{
 
 const cursoProgramacionBasica = new Course({
     name: "Curso Gratis de programación Basica",
+    isFree: true
 });
 
 
@@ -60,9 +84,12 @@ const cursoProgramacionBasica = new Course({
 const cursoDefinitivoHTMLCSS = new Course({
     name: "Curso definitivo de HTML y CSS",
 });
+
 const cursoPracticoHTMLCSS = new Course({
     name: "Curso Práctico de HTML y CSS",
+    lang: "english" , 
 });
+
 const cursoResponsiveDesing = new Course({
     name: "Curso de Responsive Desing",
 });
@@ -129,9 +156,74 @@ class Student {
         this.approvedCourses = approvedCourses;
         this.learningPaths = learningPaths;
     }
+
+    publicarComentario(commentContent){
+        const comment = new Comment({
+            content: commentContent,
+            studentName: this.name,
+        });
+        comment.publicar();
+    }
 };
 
-const Israel2 = new Student({
+class FreeStudent extends Student {
+    constructor(props){
+        super(props)
+    }
+
+    approvedCoursess(newCourse){
+        if(newCourse.isFree){
+            this.approvedCourses.push(newCourse);
+        }else{
+            console.warn("Lo sentimos, "+this.name+", solo puedes tomar cursos abiertos");
+        }
+    }
+}
+
+class BasicStudent extends Student {
+    constructor(props){
+        super(props)
+    }
+
+    approvedCoursess(newCourse){
+        if(newCourse.lang !== "english"){
+            this.approvedCourses.push(newCourse);
+        }else{
+            console.warn("Lo sentimos, "+this.name+", solo no puedes tomar cursos en ingles");
+        }
+    }
+}
+
+class ExpertStudent extends Student {
+    constructor(props){
+        super(props)
+    }
+
+    approvedCoursess(newCourse){
+        this.approvedCourses.push(newCourse);
+    }
+}
+class teacherStudent extends Student {
+    constructor(props){
+        super(props)
+    }
+
+    approvedCoursess(newCourse){
+        this.approvedCourses.push(newCourse);
+    }
+
+    publicarComentario(commentContent){
+        const comment = new Comment({
+            content: commentContent,
+            studentName: this.name,
+            studentRole: "profesor",
+        });
+        comment.publicar();
+    }
+
+}
+
+const Israel2 = new FreeStudent({
     name: "IsraelLP",
     username: "Israellp24",
     email: "israellp24@gmail.com",
@@ -144,7 +236,7 @@ const Israel2 = new Student({
 });
 
 
-const miguelito1 = new Student({
+const miguelito1 = new BasicStudent({
     name: "miguel",
     username: "miguelito24",
     email: "migue@gmail.com",
@@ -155,4 +247,12 @@ const miguelito1 = new Student({
     learningPaths: [
         escuelaDesarrolloVideoJuegos
     ]
+});
+
+const freddy = new teacherStudent({
+    name: "freddy vega",
+    username: "freddy@gasd",
+    email: "fred@gmail.com",
+    facebook: "fred_chido",
+
 });
